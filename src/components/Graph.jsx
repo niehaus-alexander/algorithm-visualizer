@@ -17,18 +17,30 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-const data = [1, 2, 3, 4, 5, 6, 7, 10, 8, 9];
+import { useState } from "react";
+import _ from "lodash";
 
 const Graph = () => {
+  const [array, setArray] = useState([]);
+  const [isSorting, setIsSorting] = useState(false);
+
+  useEffect(() => {
+    const unsortedArray = _.shuffle(_.range(1, 101));
+    setArray(unsortedArray);
+  }, []);
+
+  function bubbleSort(unsortedArray) {
+    // Bubble Sort implementieren
+  }
+
   const chartData = {
     labels: data.map((_, idx) => idx + 1),
     datasets: [
       {
         label: "Array Values",
         data: data,
-        backgroundColor: "rgba(75, 192, 192, 0.5)",
-        borderColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: "rgba(17, 26, 40, 0.5)",
+        borderColor: "#d51010",
         borderWidth: 1,
       },
     ],
@@ -36,7 +48,7 @@ const Graph = () => {
 
   const options = {
     responsive: true,
-    maintainAspectRatio: false,
+
     scales: {
       y: {
         beginAtZero: true,
@@ -45,8 +57,11 @@ const Graph = () => {
   };
 
   return (
-    <div className="top-14">
-      <Bar data={chartData} options={options} />
+    <div className="h-screen flex justify-center items-center">
+      <div className="w-[50%] h-[16rem] flex flex-col justify-between items-center mb-24 ">
+        <button className="btn">Start Bubble Sort</button>
+        <Bar data={chartData} options={options} />
+      </div>
     </div>
   );
 };
